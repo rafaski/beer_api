@@ -1,0 +1,3 @@
+Beer:
+{'id': 169, 'name': 'AB:19', 'fermentation': {'value': None, 'unit': 'celsius'}, 'hops': []}
+DROPPED
