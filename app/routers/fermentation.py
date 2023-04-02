@@ -27,5 +27,5 @@ async def get_avg_fermentation_temp_by_hop_all(
     Get an average fermentation temperature for all available hops
     """
     # results = crud.get_beer_by_id(db=db, beer_id=1)
-    results = crud.get_avg_temp_by_hops(db=db)
+    results = crud.get_all_beers(db=db)
     return results

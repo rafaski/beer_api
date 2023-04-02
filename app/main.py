@@ -14,9 +14,9 @@ app = FastAPI(
 
 
 @app.on_event("startup")
-def get_data() -> None:
+async def get_data() -> None:
     """Get all data"""
-    punk_request()
+    await punk_request()
 
 
 app.include_router(router=router)
