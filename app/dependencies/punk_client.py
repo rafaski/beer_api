@@ -1,39 +1,63 @@
 import httpx
 import asyncio
-from pprint import pprint
+
+from app.sql.crud import create_beer, create_hop
+from app.sql.database import SessionLocal, engine
+from app.sql import models
+from app.schemas import Beer, Hop
 
 
-async def punk_request() -> list[dict]:
+models.Base.metadata.create_all(bind=engine)
+
+session = SessionLocal()
+
+
+async def punk_request() -> None:
     """
     HTTP requests to fetch all beer data from Punk API
     :return: a list of all beers
     """
-    all_beers = []
-
-    # overwriting default 5 sec timeout
-    timeout = httpx.Timeout(timeout=15.0, read=None)
-
-    # fetching all beer data
     for page in range(1, 6):
         url = f"https://api.punkapi.com/v2/beers?page={page}&per_page=80"
         async with httpx.AsyncClient() as client:
-            response = await client.get(url=url, timeout=timeout)
-            # all_beers.extend(response.json())
-            for beer in response.json():
-                if not beer.get("id") == 169:
-                    new_beer = {
-                        "id": beer.get("id"),
-                        "name": beer.get("name"),
-                        "fermentation": beer.get("method").get(
-                            "fermentation"
-                        ).get("temp"),
-                        "hops": beer.get("ingredients").get("hops")
-                    }
-                    # print(new_beer)
-                    all_beers.append(new_beer)
+            response = await client.get(url=url)
 
-    # TODO: REMOVE LIST, extract directly to DB from JSON response
-    return all_beers
+        if response.status_code == 200:
+            beers = response.json()
+            for beer in beers:
+                if beer.get("method").get("fermentation").get("temp").get(
+                        "value") is not None:
+                    new_beer: Beer = Beer(
+                        id=beer.get("id"),
+                        name=beer.get("name"),
+                        fermentation_temp=beer.get("method").get(
+                            "fermentation").get("temp").get("value")
+                    )
+                    # print(new_beer)
+                    create_beer(db=session, beer=new_beer)
+                    # session.add(models.Beer(**new_beer.dict()))
+                    # session.commit()
+
+                # TODO: filling missing temp with mean of all beers
+
+                hops = beer.get("ingredients").get("hops")
+                for hop in hops:
+                    if hops is not None:
+                        new_hop: Hop = Hop(
+                            name=hop.get("name"),
+                            amount=hop.get("amount").get("value"),
+                            add=hop.get("add"),
+                            attribute=hop.get("attribute"),
+                            beer_id=beer.get("id")
+                        )
+                        # print(new_hop)
+                        create_hop(db=session, hop=new_hop)
+                        # session.add(models.Hop(**new_hop.dict()))
+                        # session.commit()
+
+        else:
+            print('Failed to fetch data from the PunkAPI')
+
 
 loop = asyncio.get_event_loop()
-pprint(loop.run_until_complete(punk_request()))
+loop.run_until_complete(punk_request())
