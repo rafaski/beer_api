@@ -59,5 +59,5 @@ async def punk_request() -> None:
             print('Failed to fetch data from the PunkAPI')
 
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(punk_request())
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(punk_request())
