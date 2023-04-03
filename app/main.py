@@ -28,7 +28,7 @@ def get_db():
 
 
 @app.on_event("startup")
-async def startup_event(db: Session = Depends(get_db)) -> None:
+async def startup_event(db: Session = Depends(get_db)):
     """
     Making a request to beer API, storing data in DB
     """
@@ -59,7 +59,7 @@ async def startup_event(db: Session = Depends(get_db)) -> None:
 
 @app.get("/avg_fermentation_temp_by_hop")
 async def get_avg_fermentation_temp_by_hop_all(
-        db: Session = Depends(get_db)) -> list[Hop]:
+        db: Session = Depends(get_db)):
     """
     Get average (mean) fermentation temperature for each type of hops
     """
@@ -69,10 +69,22 @@ async def get_avg_fermentation_temp_by_hop_all(
 
 @app.get("/avg_fermentation_temp_primary_hops")
 async def get_avg_fermentation_temp_primary_hops(
-        db: Session = Depends(get_db)) -> list[Hop]:
+        db: Session = Depends(get_db)):
     """
     Get average (mean) fermentation temperature for the primary hops
     """
     # TODO: Update CRUD operation with primary_hop logic
-    results = crud.get_avg_temp_primary_hops(db=db)
-    return results
+    results_by_hop = crud.get_avg_temp_by_hops(db=db)
+
+    # Create a dict of avg hop fermentation temps to update results_primary_hops
+    hop_avg_temp = {}
+    for entry in results_by_hop:
+        hop_avg_temp[entry["name"]] = entry["avg_beer_fermentation_temp"]
+
+    # Get data for avg_fermentation_temp_primary_hops
+    results_primary_hops = crud.get_avg_temp_primary_hops(db=db)
+    for row in results_primary_hops:
+        if row["hop_name"] in hop_avg_temp.keys():
+            # Add key to row dict with avg_fermentation_temp_by_hop
+            row["avg_beer_fermentation_temp"] = hop_avg_temp[row["hop_name"]]
+    return results_primary_hops
