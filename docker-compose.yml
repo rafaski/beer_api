@@ -9,7 +9,7 @@ services:
       - .:/app
       - /virtual-env
     ports:
-      - "8000:8000"
+      - 8000:8000
     command: "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
     env_file:
       - "./.env"
@@ -19,13 +19,18 @@ services:
     image: postgres:14-alpine
     container_name: postgres_db
     volumes:
-      - postgres_data:/var/lib/postgressql/data
+      - ./postgres_data:/var/lib/postgressql/data
     expose:
       - 5432
     ports:
-      - "5432:5432"
+      - 5432:5432
     env_file:
       - "./.env"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
 volumes:
   postgres_data:
