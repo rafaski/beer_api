@@ -50,6 +50,13 @@ Only then you can hit other endpoints.
 Once the application is up and running, you can access FastAPI automatic docs 
 at index page `/docs`
 
+### Status codes
+| Status code | Description  |
+|-------------|--------------|
+| 200         | success      |
+| 400         | Bad request  |
+| 404         | Not found    |
+
 ### Endpoints
 | Method | Endpoint                            | Description                                                       |
 |--------|-------------------------------------|-------------------------------------------------------------------|

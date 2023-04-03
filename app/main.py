@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Depends, BackgroundTasks
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
 from app.sql import crud, models
 from app.sql.database import SessionLocal, engine
 from app.schemas import Beer, Hop
 from app.dependencies.punk_client import punk_request
+from app.errors import NotFound
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -107,6 +108,8 @@ async def get_beers_by_temp(temp: int, db: Session = Depends(get_db)):
     Get all beers that have a fermentation temperature greater than X
     """
     results = crud.get_beers_by_temp(db=db, temp=temp)
+    if not results:
+        raise NotFound(details="Results not found.")
     return results
 
 
@@ -116,6 +119,8 @@ async def get_hops_by_amount(amount: int, db: Session = Depends(get_db)):
     Get all hops that have an amount greater than or equal to X
     """
     results = crud.get_hops_by_amount(db=db, amount=amount)
+    if not results:
+        raise NotFound(details="Results not found.")
     return results
 
 
@@ -126,5 +131,7 @@ async def get_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
     and order them by fermentation temperature
     """
     results = crud.get_beers_by_hop(db=db, hop_name=hop_name)
+    if not results:
+        raise NotFound(details="Results not found.")
     return results
 
