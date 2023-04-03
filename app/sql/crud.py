@@ -78,3 +78,22 @@ def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
         models.Beer.id, models.Hop.name).order_by(
         models.Beer.id, func.sum(models.Hop.amount).desc()).all()
     return results
+
+
+def get_ten_most_used_hops(db: Session) -> list[models.Hop]:
+    """
+    Show the top 10 most used hops in the recipes
+    """
+    results = db.query(models.Hop.name, func.sum(models.Hop.amount).label(
+        'total_amount')).group_by(models.Hop.name).order_by(func.sum(
+        models.Hop.amount).desc()).limit(10)
+    return results
+
+
+def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
+    """
+    Show the beers that use a particular hop
+    """
+    results = db.query(models.Hop.beer_id).filter(
+        models.Hop.name == hop_name).all()
+    return results

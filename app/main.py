@@ -89,3 +89,21 @@ async def get_avg_fermentation_temp_primary_hops(
             row["avg_beer_fermentation_temp"] = hop_avg_temp[row["hop_name"]]
 
     return results_primary_hops
+
+
+@app.get("/get_10_most_used_hops")
+async def get_10_most_used_hops(db: Session = Depends(get_db)):
+    """
+    Show the top 10 most used hops in the recipes
+    """
+    results = crud.get_ten_most_used_hops(db=db)
+    return results
+
+
+@app.get("/get_beers_by_hop")
+async def get_all_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
+    """
+    Show the beers that use a particular hop
+    """
+    results = crud.get_beers_by_hop(db=db, hop_name=hop_name)
+    return results
