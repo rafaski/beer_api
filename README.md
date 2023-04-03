@@ -54,10 +54,12 @@ at index page `/docs`
 | Method | Endpoint                            | Description                                                       |
 |--------|-------------------------------------|-------------------------------------------------------------------|
 | GET    | /data                               | Making a request to beer API, storing data in DB                  |
-| GET    | /avg_fermentation_temp_by_hop       | Get average (mean) fermentation temperature for each type of hops |
+| GET    | /avg_fermentation_temp_by_hop       | Get average fermentation temperature for each type of hops        |
 | GET    | /avg_fermentation_temp_primary_hops | Get average fermentation temperature for the primary hops         |
 | GET    | /get_10_most_used_hops              | Show the top 10 most used hops in the recipes                     |
-| GET    | /get_beers_by_hop/{hop_name}        | Show the beers that use a particular hop                          |
+| GET    | /beers_by_temp                      | Get all beers that have a fermentation temperature greater than X |
+| GET    | /hops_by_amount                     | Get all hops that have an amount greater than or equal to X       |
+| GET    | /beers_by_hop                       | Get all beers that have a hop with the name X                     |
 
 ## Examples
 GET `/data`
@@ -85,10 +87,6 @@ GET `/avg_fermentation_temp_by_hop`
     "name": "American Oak Chips Heavy Toast Soaked in Bourbon",
     "avg_beer_fermentation_temp": 19
   },
-  {
-    "name": "American Oak Chips Heavy Toast soaked in Speyside Whisky",
-    "avg_beer_fermentation_temp": 19
-  },
   ...
 ]
 ```
@@ -98,7 +96,7 @@ GET `/avg_fermentation_temp_primary_hops`
   "TBA": "TBA"
 }
 ```
-GET `/get_10_most_used_hops`
+GET `/most_used_hops`
 ```json
 {
   "Simcoe": 6861.01,
@@ -112,27 +110,62 @@ GET `/get_10_most_used_hops`
   "Cascade": 2710.45,
   "Mosaic": 2168
 }
-}
 ```
-GET `/get_beers_by_hop/Fuggles`
+GET `/beers_by_temp?temp=20`
 ```json
 [
   {
-    "beer_id": 1
+    "id": 76,
+    "fermentation_temp": 21,
+    "name": "#Mashtag 2013"
   },
   {
-    "beer_id": 1
+    "id": 136,
+    "fermentation_temp": 21,
+    "name": "#Mashtag 2014"
   },
   {
-    "beer_id": 11
-  },
-  {
-    "beer_id": 11
-  },
-  {
-    "beer_id": 27
+    "id": 90,
+    "fermentation_temp": 21,
+    "name": "#Mashtag 2015"
   },
   ...
 ]
 ```
-
+GET `/hops_by_amount?amount=1000`
+```json
+[
+  {
+    "id": 1476,
+    "add": "Flame out",
+    "beer_id": 271,
+    "name": "Raspberry Juice",
+    "amount": 3000,
+    "attribute": "Flavour"
+  },
+  {
+    "id": 1564,
+    "add": "Flame Out",
+    "beer_id": 286,
+    "name": "Fresh Strawberries",
+    "amount": 2000,
+    "attribute": "Flavour"
+  },
+  ...
+]
+```
+GET `/beers_by_hop?hop_name=Raspberry%20Juice`
+```json
+[
+  {
+    "name": "Small Batch: Cranachan Cream Ale",
+    "id": 271,
+    "fermentation_temp": 19
+  },
+  {
+    "name": "Raspberry Popsicle Parade",
+    "id": 299,
+    "fermentation_temp": 21
+  }
+]
+```

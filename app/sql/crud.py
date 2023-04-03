@@ -12,32 +12,11 @@ def create_beer(db: Session, beer: Beer) -> None:
     db.commit()
 
 
-def get_all_beers(db: Session) -> list[models.Beer] | None:
-    """Get all beers from db"""
-    all_beers = db.query(models.Beer).all()
-    return all_beers
-
-
-def get_beer_by_id(db: Session, beer_id: int) -> models.Beer | None:
-    """Get beer by name"""
-    beer = db.query(models.Beer).filter(
-        models.Beer.id == beer_id
-    ).first()
-    return beer
-
-
 def create_hop(db: Session, hop: Hop) -> None:
     """Save a new hop to db"""
     new_hop = models.Hop(**hop.dict())
     db.add(new_hop)
     db.commit()
-
-
-def get_by_hop_name(db: Session, hop_name: str) -> list[models.Hop] | None:
-    """Get a list of hops by name"""
-    matching_hops = db.query(models.Hop).filter(
-        models.Hop.name == hop_name).all()
-    return matching_hops
 
 
 def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
@@ -85,10 +64,31 @@ def get_ten_most_used_hops(db: Session) -> list[models.Hop]:
     return results
 
 
-def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
+def get_beers_by_temp(db: Session, temp: int) -> list[models.Beer]:
     """
-    Show the beers that use a particular hop
+    Get all beers that have a fermentation temperature greater than X
+    """
+    results = db.query(models.Beer).filter(
+        models.Beer.fermentation_temp > temp).order_by(
+        models.Beer.name).all()
+    return results
+
+
+def get_hops_by_amount(db: Session, amount: int) -> list[models.Hop]:
+    """
+    Get all hops that have an amount greater than or equal to X
     """
     results = db.query(models.Hop).filter(
-        models.Hop.name == hop_name).group_by(models.Hop.beer_id)
+        models.Hop.amount >= amount).order_by(models.Hop.amount.desc()).all()
+    return results
+
+
+def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
+    """
+    Get all beers that have a hop with the name X
+    and order them by fermentation temperature
+    """
+    results = db.query(models.Beer).join(models.Hop).filter(
+        models.Hop.name == hop_name).order_by(
+        models.Beer.fermentation_temp).all()
     return results

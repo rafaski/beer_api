@@ -92,7 +92,7 @@ async def get_avg_fermentation_temp_primary_hops(
     return results_primary_hops
 
 
-@app.get("/get_10_most_used_hops")
+@app.get("/most_used_hops")
 async def get_10_most_used_hops(db: Session = Depends(get_db)):
     """
     Show the top 10 most used hops in the recipes
@@ -101,10 +101,30 @@ async def get_10_most_used_hops(db: Session = Depends(get_db)):
     return results
 
 
-@app.get("/get_beers_by_hop/{hop_name}")
-async def get_all_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
+@app.get("/beers_by_temp")
+async def get_beers_by_temp(temp: int, db: Session = Depends(get_db)):
     """
-    Show the beers that use a particular hop
+    Get all beers that have a fermentation temperature greater than X
+    """
+    results = crud.get_beers_by_temp(db=db, temp=temp)
+    return results
+
+
+@app.get("/hops_by_amount")
+async def get_hops_by_amount(amount: int, db: Session = Depends(get_db)):
+    """
+    Get all hops that have an amount greater than or equal to X
+    """
+    results = crud.get_hops_by_amount(db=db, amount=amount)
+    return results
+
+
+@app.get("/beers_by_hop")
+async def get_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
+    """
+    Get all beers that have a hop with the name X
+    and order them by fermentation temperature
     """
     results = crud.get_beers_by_hop(db=db, hop_name=hop_name)
     return results
+
