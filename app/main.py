@@ -100,7 +100,7 @@ async def get_10_most_used_hops(db: Session = Depends(get_db)):
     return results
 
 
-@app.get("/get_beers_by_hop")
+@app.get("/get_beers_by_hop/{hop_name}")
 async def get_all_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
     """
     Show the beers that use a particular hop
