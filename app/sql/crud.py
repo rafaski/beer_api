@@ -42,7 +42,14 @@ def get_by_hop_name(db: Session, hop_name: str) -> list[models.Hop] | None:
 
 
 def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
-    """Get an average fermentation temperature by hop"""
+    """
+    Get an average fermentation temperature by hop
+    SQL statement:
+    SELECT hops.name, ROUND(AVG(beers.fermentation_temp), 1)
+    AS avg_beer_fermentation_temp FROM hops
+    INNER JOIN beers ON hops.beer_id=beers.id GROUP BY hops.name
+
+    """
     results = db.query(models.Hop.name, func.avg(
         models.Hop.beer.fermentation_temp)).group_by(models.Hop.name).all()
     return results
