@@ -61,6 +61,21 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
 def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
     """
     Get average (mean) fermentation temperature for the primary hops
-    TODO: SQL statement:
-    TBA
+    SQL statement:
+    SELECT beers.id, beers.name AS beer_name, hops.name AS hop_name,
+    SUM(hops.amount) AS hops_amount_sum, beers.fermentation_temp FROM hops
+    INNER JOIN beers ON hops.beer_id=beers.id GROUP BY beers.id, hops.name
+    ORDER BY beers.id, hops.amount
     """
+    # TODO: SQL statement not correct. Needs avg hop temp from previous function
+
+    results = db.query(
+        models.Beer.id,
+        models.Beer.name.label('beer_name'),
+        models.Hop.name.label('hop_name'),
+        func.sum(Hop.amount).label('hops_amount_sum'),
+        models.Beer.fermentation_temp).join(
+        Hop, Beer.id == Hop.beer_id).group_by(
+        Beer.id, Hop.name).order_by(
+        Beer.id, Hop.amount).all()
+    return results

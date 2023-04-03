@@ -71,7 +71,7 @@ async def get_avg_fermentation_temp_by_hop_all(
 async def get_avg_fermentation_temp_primary_hops(
         db: Session = Depends(get_db)) -> list[Hop]:
     """
-    Get average (mean) fermentation temperature for the primaryhops
+    Get average (mean) fermentation temperature for the primary hops
     """
     # TODO: Update CRUD operation with primary_hop logic
     results = crud.get_avg_temp_primary_hops(db=db)
