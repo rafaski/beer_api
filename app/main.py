@@ -63,7 +63,7 @@ async def get_data(db: Session = Depends(get_db)):
 async def get_avg_fermentation_temp_by_hop_all(
         db: Session = Depends(get_db)):
     """
-    Get average (mean) fermentation temperature for each type of hops
+    Get average fermentation temperature for each type of hops
     """
     results = crud.get_avg_temp_by_hops(db=db)
     return results
@@ -73,7 +73,7 @@ async def get_avg_fermentation_temp_by_hop_all(
 async def get_avg_fermentation_temp_primary_hops(
         db: Session = Depends(get_db)):
     """
-    Get average (mean) fermentation temperature for the primary hops
+    Get average fermentation temperature for the primary hops
     """
     # TODO: Update CRUD operation with primary_hop logic
     results_by_hop = crud.get_avg_temp_by_hops(db=db)

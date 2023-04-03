@@ -94,7 +94,6 @@ GET `/avg_fermentation_temp_by_hop`
     "name": "American Oak Chips Heavy Toast Soaked in Bourbon",
     "avg_beer_fermentation_temp": 19
   },
-  ...
 ]
 ```
 GET `/avg_fermentation_temp_primary_hops`
@@ -136,7 +135,6 @@ GET `/beers_by_temp?temp=20`
     "fermentation_temp": 21,
     "name": "#Mashtag 2015"
   },
-  ...
 ]
 ```
 GET `/hops_by_amount?amount=1000`
@@ -158,7 +156,6 @@ GET `/hops_by_amount?amount=1000`
     "amount": 2000,
     "attribute": "Flavour"
   },
-  ...
 ]
 ```
 GET `/beers_by_hop?hop_name=Raspberry%20Juice`
