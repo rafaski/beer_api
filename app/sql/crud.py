@@ -56,3 +56,11 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
         models.Beer, models.Hop.beer_id == models.Beer.id).group_by(
         models.Hop.name).all()
     return results
+
+
+def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
+    """
+    Get average (mean) fermentation temperature for the primary hops
+    TODO: SQL statement:
+    TBA
+    """
