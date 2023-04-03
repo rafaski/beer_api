@@ -14,7 +14,7 @@ This a Beer Recipe API
 Beer recipes are provided by an external API `Punk API` 
 `https://punkapi.com/documentation/v2`
 
-Supported operations are:
+### Supported operations are:
 - get average fermentation temperature by hop
 - get average fermentation temperature for primary hops per beer
 - get 10 most used hops in the recipes
