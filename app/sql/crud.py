@@ -66,10 +66,7 @@ def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
     SUM(hops.amount) AS hops_amount_sum FROM hops
     INNER JOIN beers ON hops.beer_id=beers.id GROUP BY beers.id, hops.name
     ORDER BY beers.id, SUM(hops.amount) DESC
-
-
     """
-    # TODO: SQL statement not correct. Needs avg hop temp from previous function
     # TODO: limit to primary hops only
 
     results = db.query(
