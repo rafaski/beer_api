@@ -87,4 +87,5 @@ async def get_avg_fermentation_temp_primary_hops(
         if row["hop_name"] in hop_avg_temp.keys():
             # Add key to row dict with avg_fermentation_temp_by_hop
             row["avg_beer_fermentation_temp"] = hop_avg_temp[row["hop_name"]]
+
     return results_primary_hops
