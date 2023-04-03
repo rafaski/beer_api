@@ -28,11 +28,33 @@ def get_db():
 
 
 @app.on_event("startup")
-async def startup_event() -> None:
+async def startup_event(db: Session = Depends(get_db)) -> None:
     """
     Making a request to beer API, storing data in DB
     """
-    await punk_request(db=get_db)
+    for page in range(1, 6):
+        beers = await punk_request(page=page)
+        for beer in beers:
+            temp = beer["method"]["fermentation"]["temp"]["value"]
+            if temp:
+                new_beer: Beer = Beer(
+                    id=beer["id"],
+                    name=beer["name"],
+                    fermentation_temp=temp
+                )
+                crud.create_beer(db=db, beer=new_beer)
+
+            hops = beer["ingredients"]["hops"]
+            for hop in hops:
+                if hops:
+                    new_hop: Hop = Hop(
+                        name=hop["name"],
+                        amount=hop["amount"]["value"],
+                        add=hop["add"],
+                        attribute=hop["attribute"],
+                        beer_id=beer["id"]
+                    )
+                    crud.create_hop(db=db, hop=new_hop)
 
 
 @app.get("/avg_fermentation_temp_by_hop")
@@ -41,7 +63,7 @@ async def get_avg_fermentation_temp_by_hop_all(
     """
     Get average (mean) fermentation temperature for each type of hops
     """
-    results = crud.get_all_beers(db=db)
+    results = crud.get_avg_temp_by_hops(db=db)
     return results
 
 
@@ -51,5 +73,6 @@ async def get_avg_fermentation_temp_primary_hops(
     """
     Get average (mean) fermentation temperature for the primaryhops
     """
-    results = crud.get_all_beers(db=db)
+    # TODO: Update CRUD operation with primary_hop logic
+    results = crud.get_avg_temp_by_hops(db=db)
     return results
