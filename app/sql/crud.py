@@ -50,7 +50,9 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
     INNER JOIN beers ON hops.beer_id=beers.id GROUP BY hops.name
 
     """
-    # TODO: fix SQLalchemy query logic
-    results = db.query(models.Hop.name, func.avg(
-        models.Hop.beer.fermentation_temp)).group_by(models.Hop.name).all()
+    results = db.query(models.Hop.name, func.round(func.avg(
+        models.Beer.fermentation_temp), 1).label(
+        'avg_beer_fermentation_temp')).join(
+        models.Beer, models.Hop.beer_id == models.Beer.id).group_by(
+        models.Hop.name).all()
     return results
