@@ -75,21 +75,8 @@ async def get_avg_fermentation_temp_primary_hops(
     """
     Get average fermentation temperature for the primary hops
     """
-    # TODO: Update CRUD operation with primary_hop logic
-    results_by_hop = crud.get_avg_temp_by_hops(db=db)
-
-    # Create a dict of avg hop fermentation temps to update results_primary_hops
-    hop_avg_temp = {}
-    for entry in results_by_hop:
-        hop_avg_temp[entry["name"]] = entry["avg_beer_fermentation_temp"]
-
-    # Get data for avg_fermentation_temp_primary_hops
+    # TODO: does not work
     results_primary_hops = crud.get_avg_temp_primary_hops(db=db)
-    for row in results_primary_hops:
-        if row["hop_name"] in hop_avg_temp.keys():
-            # Add key to row dict with avg_fermentation_temp_by_hop
-            row["avg_beer_fermentation_temp"] = hop_avg_temp[row["hop_name"]]
-
     return results_primary_hops
 
 

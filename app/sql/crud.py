@@ -34,45 +34,12 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
 def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
     """
     Get average (mean) fermentation temperature for the primary hops
-    SQL statement:
-    SELECT beers.id, beers.name AS beer_name, hops.name AS hop_name,
-    SUM(hops.amount) AS hops_amount_sum FROM hops
-    INNER JOIN beers ON hops.beer_id=beers.id GROUP BY beers.id, hops.name
-    ORDER BY beers.id, SUM(hops.amount) DESC
     """
-    # TODO: limit to primary hops only
-
-    results = db.query(
-        models.Beer.id,
-        models.Beer.name.label('beer_name'),
-        models.Hop.name.label('hop_name'),
-        func.sum(models.Hop.amount).label('hops_amount_sum')).join(
-        models.Hop, models.Beer.id == models.Hop.beer_id).group_by(
-        models.Beer.id, models.Hop.name).order_by(
-        models.Beer.id, func.sum(models.Hop.amount).desc()).all()
-    return results
-
-
-# def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
-#     """
-#     Get average (mean) fermentation temperature for the primary hops
-#     SQL statement:
-#     SELECT beers.id, beers.name AS beer_name, hops.name AS hop_name,
-#     SUM(hops.amount) AS hops_amount_sum FROM hops
-#     INNER JOIN beers ON hops.beer_id=beers.id GROUP BY beers.id, hops.name
-#     ORDER BY beers.id, SUM(hops.amount) DESC
-#     """
-#     # TODO: limit to primary hops only
-#
-#     results = db.query(
-#         models.Beer.id,
-#         models.Beer.name.label('beer_name'),
-#         models.Hop.name.label('hop_name'),
-#         func.sum(models.Hop.amount).label('hops_amount_sum')).join(
-#         models.Hop, models.Beer.id == models.Hop.beer_id).group_by(
-#         models.Beer.id, models.Hop.name).order_by(
-#         models.Beer.id, func.sum(models.Hop.amount).desc()).all()
-#     return results
+    # TODO: does not work
+    primary_hops = db.query(models.Hop.beer_id, func.max(
+        models.Hop.amount).label("max_amount")).group_by(
+        models.Hop.beer_id).subquery()
+    return primary_hops
 
 
 def get_ten_most_used_hops(db: Session) -> list[models.Hop]:
