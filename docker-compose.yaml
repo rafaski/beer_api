@@ -1,19 +1,31 @@
+version: "3.9"
+
 services:
-  app:
-    container_name: app
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file: .env
+  fastapi_beer_app:
+    build: .
+    image: "fastapi_beer_image"
+    container_name: "fastapi_beer_app"
+    volumes:
+      - .:/app
+      - /virtual-env
     ports:
-      - 8080:8080
+      - "8000:8000"
+    command: "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    env_file:
+      - "./.env"
     depends_on:
-      - postgres
-  postgres:
-    image: postgres
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - postgres_db
+  postgres_db:
+    image: postgres:14-alpine
+    container_name: postgres_db
+    volumes:
+      - postgres_data:/var/lib/postgressql/data
+    expose:
+      - 5432
     ports:
-      - '5432:5432'
+      - "5432:5432"
+    env_file:
+      - "./.env"
+
+volumes:
+  postgres_data:

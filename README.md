@@ -11,7 +11,7 @@ This a Beer Recipe API
 - data validation and data modelling with `pydantic`
 
 ### Beer recipes
-Beer recipes are provided by an external API `Punk API` 
+Beer recipes are provided by an external API `Punk API` at 
 `https://punkapi.com/documentation/v2`
 
 ### Supported operations are:
@@ -22,7 +22,7 @@ Beer recipes are provided by an external API `Punk API`
 
 ### Requests
 Async requests to the external API were made using `httpx` library 
-to get all 325 beer recipes in JSON format
+to get all 325 beer recipes in JSON format.
 
 ### Database
 JSON response has a nested structure and many missing data therefore only 
@@ -42,24 +42,55 @@ Dependency management is handled using `requirements.txt` file
 1. Install dependencies from `requirements.txt`
 2. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
 
+### How to run application
+Make sure to hit `/data` endpoint first. It will fetch data from Punk API and save it to database.
+Only then you can hit other endpoints.
+
 ### Documentation
 Once the application is up and running, you can access FastAPI automatic docs 
 at index page `/docs`
 
 ### Endpoints
-| Method | Endpoint                            | Description                                                        |
-|--------|-------------------------------------|--------------------------------------------------------------------|
-| GET    | /avg_fermentation_temp_by_hop       | Get average (mean) fermentation temperature for each type of hops  |
-| GET    | /avg_fermentation_temp_primary_hops | Get average fermentation temperature for the primary hops          |
-| GET    | /get_10_most_used_hops              | Show the top 10 most used hops in the recipes                      |
-| GET    | /get_beers_by_hop/{hop_name}        | Show the beers that use a particular hop                           |
+| Method | Endpoint                            | Description                                                       |
+|--------|-------------------------------------|-------------------------------------------------------------------|
+| GET    | /data                               | Making a request to beer API, storing data in DB                  |
+| GET    | /avg_fermentation_temp_by_hop       | Get average (mean) fermentation temperature for each type of hops |
+| GET    | /avg_fermentation_temp_primary_hops | Get average fermentation temperature for the primary hops         |
+| GET    | /get_10_most_used_hops              | Show the top 10 most used hops in the recipes                     |
+| GET    | /get_beers_by_hop/{hop_name}        | Show the beers that use a particular hop                          |
 
 ## Examples
-GET `/avg_fermentation_temp_by_hop`
+GET `/data`
 ```json
 {
-  "TBA": "TBA"
+  "message": "Data requested from Punk API and stored in database"
 }
+```
+GET `/avg_fermentation_temp_by_hop`
+```json
+[
+  {
+    "name": "1 lemon drop chilli",
+    "avg_beer_fermentation_temp": 21
+  },
+  {
+    "name": "Ahtanum",
+    "avg_beer_fermentation_temp": 18.7
+  },
+  {
+    "name": "Amarillo",
+    "avg_beer_fermentation_temp": 19.3
+  },
+  {
+    "name": "American Oak Chips Heavy Toast Soaked in Bourbon",
+    "avg_beer_fermentation_temp": 19
+  },
+  {
+    "name": "American Oak Chips Heavy Toast soaked in Speyside Whisky",
+    "avg_beer_fermentation_temp": 19
+  },
+  ...
+]
 ```
 GET `/avg_fermentation_temp_primary_hops`
 ```json
@@ -70,13 +101,38 @@ GET `/avg_fermentation_temp_primary_hops`
 GET `/get_10_most_used_hops`
 ```json
 {
-  "TBA": "TBA"
+  "Simcoe": 6861.01,
+  "Centennial": 5605.6900000000005,
+  "Amarillo": 5591.6900000000005,
+  "Citra": 5172.25,
+  "Chinook": 4625.66,
+  "Honey": 4410,
+  "Raspberry Juice": 3800,
+  "Columbus": 3142.0800000000004,
+  "Cascade": 2710.45,
+  "Mosaic": 2168
+}
 }
 ```
-GET `/get_beers_by_hop/fuggles`
+GET `/get_beers_by_hop/Fuggles`
 ```json
-{
-  "TBA": "TBA"
-}
+[
+  {
+    "beer_id": 1
+  },
+  {
+    "beer_id": 1
+  },
+  {
+    "beer_id": 11
+  },
+  {
+    "beer_id": 11
+  },
+  {
+    "beer_id": 27
+  },
+  ...
+]
 ```
 

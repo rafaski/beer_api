@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
 
 from app.sql import crud, models
@@ -27,8 +27,8 @@ def get_db():
         db.close()
 
 
-@app.on_event("startup")
-async def startup_event(db: Session = Depends(get_db)):
+@app.get("/data")
+async def get_data(db: Session = Depends(get_db)):
     """
     Making a request to beer API, storing data in DB
     """
@@ -55,6 +55,7 @@ async def startup_event(db: Session = Depends(get_db)):
                         beer_id=beer["id"]
                     )
                     crud.create_hop(db=db, hop=new_hop)
+    return {"message": "Data requested from Punk API and stored in database"}
 
 
 @app.get("/avg_fermentation_temp_by_hop")

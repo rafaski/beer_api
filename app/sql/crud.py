@@ -36,19 +36,13 @@ def create_hop(db: Session, hop: Hop) -> None:
 def get_by_hop_name(db: Session, hop_name: str) -> list[models.Hop] | None:
     """Get a list of hops by name"""
     matching_hops = db.query(models.Hop).filter(
-        models.Hop.name == hop_name
-    ).all()
+        models.Hop.name == hop_name).all()
     return matching_hops
 
 
 def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
     """
     Get an average fermentation temperature by hop
-    SQL statement:
-    SELECT hops.name, ROUND(AVG(beers.fermentation_temp), 1)
-    AS avg_beer_fermentation_temp FROM hops
-    INNER JOIN beers ON hops.beer_id=beers.id GROUP BY hops.name
-
     """
     results = db.query(models.Hop.name, func.round(func.avg(
         models.Beer.fermentation_temp), 1).label(
@@ -84,9 +78,10 @@ def get_ten_most_used_hops(db: Session) -> list[models.Hop]:
     """
     Show the top 10 most used hops in the recipes
     """
-    results = db.query(models.Hop.name, func.sum(models.Hop.amount).label(
-        'total_amount')).group_by(models.Hop.name).order_by(func.sum(
-        models.Hop.amount).desc()).limit(10)
+    results = db.query(models.Hop.name, func.round(func.sum(
+        models.Hop.amount), 1).label('total_amount')).group_by(
+        models.Hop.name).order_by(func.round(func.sum(
+        models.Hop.amount), 1).desc()).limit(10)
     return results
 
 
@@ -94,6 +89,6 @@ def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
     """
     Show the beers that use a particular hop
     """
-    results = db.query(models.Hop.beer_id).filter(
-        models.Hop.name == hop_name).all()
+    results = db.query(models.Hop).filter(
+        models.Hop.name == hop_name).group_by(models.Hop.beer_id)
     return results
