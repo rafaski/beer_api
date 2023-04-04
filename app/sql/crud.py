@@ -19,7 +19,7 @@ def create_hop(db: Session, hop: Hop) -> None:
     db.commit()
 
 
-def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
+def get_avg_temp_by_hops(db: Session) -> list[dict]:
     """
     Get an average fermentation temperature by hop
     """
@@ -31,7 +31,7 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
     return [r._asdict() for r in results]
 
 
-def get_avg_temp_primary_hops(db: Session) -> list[models.Beer]:
+def get_avg_temp_primary_hops(db: Session) -> list[dict]:
     """
     Get average (mean) fermentation temperature for the primary hops
     """
