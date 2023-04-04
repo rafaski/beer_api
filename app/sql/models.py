@@ -11,7 +11,7 @@ class Beer(Base):
     name = Column(String, index=True)
     fermentation_temp = Column(Float)
 
-    hops = relationship("Hop", back_populates="beer")
+    hops = relationship("Hop", back_populates="beer", lazy="select")
 
 
 class Hop(Base):
@@ -24,4 +24,4 @@ class Hop(Base):
     attribute = Column(String, index=True)
     beer_id = Column(Integer, ForeignKey("beers.id"))
 
-    beer = relationship("Beer", back_populates="hops")
+    beer = relationship("Beer", back_populates="hops", lazy="select")

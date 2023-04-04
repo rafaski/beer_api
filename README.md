@@ -40,9 +40,10 @@ Dependency management is handled using `requirements.txt` file
 ### Docker setup
 Start the application by running the following command `docker-compose up --build`
 
-### Local setup
+### Without Docker setup
 1. Install dependencies from `requirements.txt`
-2. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
+2. Make sure you have postgres server running
+3. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
 
 ### How to run application
 Make sure to hit `/data` endpoint first. It will fetch data from Punk API and save it to database.

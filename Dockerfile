@@ -11,10 +11,3 @@ RUN pip install --no-cache-dir -r /code/requirements.txt
 
 # Copy the entire app directory into the container
 COPY ./app /code/app
-
-# Define environment variable
-ENV POSTGRES_USER=postgres \
-    POSTGRES_PASSWORD=postgres \
-    POSTGRES_SERVER=host.docker.internal \
-    POSTGRES_PORT=5432 \
-    POSTGRES_DB=db

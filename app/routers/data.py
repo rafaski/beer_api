@@ -31,19 +31,19 @@ async def get_data(db: Session = Depends(get_db)):
                 # Saving beer to database
                 crud.create_beer(db=db, beer=new_beer)
 
-            # Extracting hop data from response
-            hops = beer["ingredients"]["hops"]
-            for hop in hops:
-                if hops:
-                    new_hop: Hop = Hop(
-                        name=hop["name"],
-                        amount=hop["amount"]["value"],
-                        add=hop["add"],
-                        attribute=hop["attribute"],
-                        beer_id=beer["id"]
-                    )
-                    # Saving hop to database
-                    crud.create_hop(db=db, hop=new_hop)
+                # Extracting hop data from response
+                hops = beer["ingredients"]["hops"]
+                for hop in hops:
+                    if hops:
+                        new_hop: Hop = Hop(
+                            name=hop["name"],
+                            amount=hop["amount"]["value"],
+                            add=hop["add"],
+                            attribute=hop["attribute"],
+                            beer_id=beer["id"]
+                        )
+                        # Saving hop to database
+                        crud.create_hop(db=db, hop=new_hop)
     return {
         "message": ("Data successfully requested from Punk API and stored "
                     "in database. You can can query data now.")
