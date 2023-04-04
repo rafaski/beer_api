@@ -13,7 +13,7 @@ description = """
 ## Beer API ##
 
 ### Supported operations are:
-- Making a request to Punk API, storing data in DB `MANDATORY`
+- `MANDATORY` Making a request to Punk API, storing data in DB
 - Get average fermentation temperature for each type of hops
 - Get average fermentation temperature for the primary hops
 - Show the top 10 most used hops in the recipes
