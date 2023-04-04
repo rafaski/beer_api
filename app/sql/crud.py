@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, select
 
 from app.sql import models
 from app.schemas import Hop, Beer
@@ -67,7 +67,7 @@ def get_avg_temp_primary_hops(db: Session) -> list[dict]:
     return [r._asdict() for r in results]
 
 
-def get_ten_most_used_hops(db: Session) -> list[models.Hop]:
+def get_ten_most_used_hops(db: Session) -> list[dict]:
     """
     Show the top 10 most used hops in the recipes
     """
@@ -78,7 +78,7 @@ def get_ten_most_used_hops(db: Session) -> list[models.Hop]:
     return results
 
 
-def get_beers_by_temp(db: Session, temp: int) -> list[models.Beer]:
+def get_beers_by_temp(db: Session, temp: int) -> list[dict]:
     """
     Get all beers that have a fermentation temperature greater than X
     """
@@ -88,7 +88,7 @@ def get_beers_by_temp(db: Session, temp: int) -> list[models.Beer]:
     return results
 
 
-def get_hops_by_amount(db: Session, amount: int) -> list[models.Hop]:
+def get_hops_by_amount(db: Session, amount: int) -> list[dict]:
     """
     Get all hops that have an amount greater than or equal to X
     """
@@ -97,7 +97,7 @@ def get_hops_by_amount(db: Session, amount: int) -> list[models.Hop]:
     return results
 
 
-def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
+def get_beers_by_hop(db: Session, hop_name: str) -> list[dict]:
     """
     Get all beers that have a hop with the name X
     and order them by fermentation temperature
@@ -110,7 +110,7 @@ def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
 
 def get_beers_with_highest_hop_amount(
     db: Session, hop_name: str
-    ) -> list[models.Beer]:
+    ) -> list[dict]:
     """
     Get the beers with the highest amount of a specific hop
     """
