@@ -24,4 +24,4 @@ class Hop(Base):
     attribute = Column(String, index=True)
     beer_id = Column(Integer, ForeignKey("beers.id"))
 
-    beer = relationship("Beer", back_populates="hops", lazy="select")
+    beer = relationship("Beer", back_populates=None, lazy="select")

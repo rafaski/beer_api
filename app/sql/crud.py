@@ -31,7 +31,7 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
     return results
 
 
-def get_avg_temp_primary_hops(db: Session):
+def get_avg_temp_primary_hops(db: Session) -> list[models.Beer]:
     """
     Get average (mean) fermentation temperature for the primary hops
     """

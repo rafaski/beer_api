@@ -7,7 +7,11 @@ from sqlalchemy.orm import sessionmaker
 
 # Switch to SQLite if unable connecting to Postgres
 DATABASE_URL = "sqlite:///./sql_app.db"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
+    pool_pre_ping=True
+)
 
 # Postgres
 # engine = create_engine(DATABASE_URL, pool_pre_ping=True)
