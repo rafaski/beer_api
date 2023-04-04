@@ -39,9 +39,12 @@ def get_avg_temp_primary_hops(db: Session):
     primary_query = db.query(
         models.Beer.id,
         models.Beer.name,
-        models.Hop.name.label('primary_hop_name'), func.max(
-        models.Hop.amount).label('max_amount')).join(models.Hop).group_by(
-        models.Beer.id, models.Beer.name, models.Hop.name).having(
+        models.Hop.name.label('primary_hop_name'),
+        func.max(models.Hop.amount).label('max_amount')).join(
+        models.Hop).group_by(
+        models.Beer.id,
+        models.Beer.name,
+        models.Hop.name).having(
         models.Hop.amount == func.max(models.Hop.amount)).subquery()
 
     # Calculate the average fermentation temperature for each hop
