@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+# Comment out if switching to SQLite
 from app.settings import DATABASE_URL
 
 # Switch to SQLite if unable connecting to Postgres
