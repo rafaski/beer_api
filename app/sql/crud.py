@@ -55,7 +55,7 @@ def get_avg_temp_primary_hops(db: Session):
         models.Beer, models.Hop.beer_id == models.Beer.id).group_by(
         models.Hop.name).subquery()
 
-    # Join above queries for fetching results
+    # Join above queries for show results
     results = db.query(
         primary_query.c.id,
         primary_query.c.name,
