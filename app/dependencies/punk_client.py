@@ -1,5 +1,6 @@
 import httpx
-from fastapi import status, HTTPException
+
+from app.errors import BadRequest
 
 
 async def punk_request(page: int) -> dict:
@@ -12,9 +13,7 @@ async def punk_request(page: int) -> dict:
         response = await client.get(url=url)
 
     if not response.status_code == 200:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail='Failed to fetch data from the PunkAPI'
-        )
+        raise BadRequest(details='Failed to fetch data from the PunkAPI')
+
     beers = response.json()
     return beers

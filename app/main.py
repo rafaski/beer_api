@@ -66,7 +66,10 @@ async def get_data(db: Session = Depends(get_db)):
                         beer_id=beer["id"]
                     )
                     crud.create_hop(db=db, hop=new_hop)
-    return {"message": "Data requested from Punk API and stored in database"}
+    return {
+        "message": ("Data requested from Punk API and stored in database. "
+                    "You can can request data now.")
+    }
 
 
 @app.get("/avg_fermentation_temp_by_hop")
