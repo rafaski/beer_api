@@ -38,8 +38,7 @@ and `SQLAlchemy`
 Dependency management is handled using `requirements.txt` file
 
 ### Docker setup
-1. Create docker container `docker compose up -d`
-
+Start the application by running the following command `docker-compose up --build`
 
 ### Local setup
 1. Install dependencies from `requirements.txt`
