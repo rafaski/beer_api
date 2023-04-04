@@ -68,8 +68,8 @@ async def get_data(db: Session = Depends(get_db)):
                     )
                     crud.create_hop(db=db, hop=new_hop)
     return {
-        "message": ("Data requested from Punk API and stored in database. "
-                    "You can can request data now.")
+        "message": ("Data successfully requested from Punk API and stored "
+                    "in database. You can can query data now.")
     }
 
 
