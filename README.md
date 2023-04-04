@@ -62,10 +62,14 @@ at index page `/docs`
 | 404         | Not found         |
 | 424         | Failed dependency |
 
-### Endpoints
+### Data Endpoints
+| Method | Endpoint | Description                                                                |
+|--------|----------|----------------------------------------------------------------------------|
+| GET    | /data    | `MANDATORY FIRST REQUEST` Making a request to beer API, storing data in DB |
+
+### Beer Endpoints
 | Method | Endpoint                            | Description                                                       |
 |--------|-------------------------------------|-------------------------------------------------------------------|
-| GET    | /data                               | Making a request to beer API, storing data in DB                  |
 | GET    | /avg_fermentation_temp_by_hop       | Get average fermentation temperature for each type of hops        |
 | GET    | /avg_fermentation_temp_primary_hops | Get average fermentation temperature for the primary hops         |
 | GET    | /get_10_most_used_hops              | Show the top 10 most used hops in the recipes                     |
