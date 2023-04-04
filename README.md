@@ -98,9 +98,29 @@ GET `/avg_fermentation_temp_by_hop`
 ```
 GET `/avg_fermentation_temp_primary_hops`
 ```json
-{
-  "TBA": "TBA"
-}
+[
+  {
+    "id": 1,
+    "name": "Buzz",
+    "primary_hop_name": "Cascade",
+    "max_amount": 37.5,
+    "avg_beer_fermentation_temp": 18.8
+  },
+  {
+    "id": 1,
+    "name": "Buzz",
+    "primary_hop_name": "First Gold",
+    "max_amount": 37.5,
+    "avg_beer_fermentation_temp": 19.4
+  },
+  {
+    "id": 1,
+    "name": "Buzz",
+    "primary_hop_name": "Fuggles",
+    "max_amount": 37.5,
+    "avg_beer_fermentation_temp": 18.9
+  },
+]
 ```
 GET `/most_used_hops`
 ```json

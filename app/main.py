@@ -75,7 +75,6 @@ async def get_avg_fermentation_temp_primary_hops(
     """
     Get average fermentation temperature for the primary hops
     """
-    # TODO: does not work
     results_primary_hops = crud.get_avg_temp_primary_hops(db=db)
     return results_primary_hops
 

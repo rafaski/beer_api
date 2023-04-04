@@ -9,7 +9,7 @@ class Beer(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    fermentation_temp = Column(Integer)
+    fermentation_temp = Column(Float)
 
     hops = relationship("Hop", back_populates="beer")
 

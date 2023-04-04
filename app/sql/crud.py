@@ -31,15 +31,37 @@ def get_avg_temp_by_hops(db: Session) -> list[models.Hop]:
     return results
 
 
-def get_avg_temp_primary_hops(db: Session) -> list[models.Hop]:
+def get_avg_temp_primary_hops(db: Session):
     """
     Get average (mean) fermentation temperature for the primary hops
     """
-    # TODO: does not work
-    primary_hops = db.query(models.Hop.beer_id, func.max(
-        models.Hop.amount).label("max_amount")).group_by(
-        models.Hop.beer_id).subquery()
-    return primary_hops
+    # Calculate the primary hop for each beer along with its maximum amount
+    primary_query = db.query(
+        models.Beer.id,
+        models.Beer.name,
+        models.Hop.name.label('primary_hop_name'), func.max(
+        models.Hop.amount).label('max_amount')).join(models.Hop).group_by(
+        models.Beer.id, models.Beer.name, models.Hop.name).having(
+        models.Hop.amount == func.max(models.Hop.amount)).subquery()
+
+    # Calculate the average fermentation temperature for each hop
+    secondary_query = db.query(
+        models.Hop.name.label('hop_name'),
+        func.round(func.avg(models.Beer.fermentation_temp), 1).label(
+        'avg_beer_fermentation_temp')).join(
+        models.Beer, models.Hop.beer_id == models.Beer.id).group_by(
+        models.Hop.name).subquery()
+
+    # Join above queries for fetching results
+    results = db.query(
+        primary_query.c.id,
+        primary_query.c.name,
+        primary_query.c.primary_hop_name,
+        primary_query.c.max_amount,
+        secondary_query.c.avg_beer_fermentation_temp).join(
+        secondary_query,
+        primary_query.c.primary_hop_name == secondary_query.c.hop_name).all()
+    return results
 
 
 def get_ten_most_used_hops(db: Session) -> list[models.Hop]:

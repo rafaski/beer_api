@@ -21,7 +21,7 @@ class Beer(BaseModel):
     """
     id: int
     name: str
-    fermentation_temp: int
+    fermentation_temp: float
 
     class Config:
         orm_mode = True
