@@ -41,7 +41,7 @@ def get_db():
 @app.get("/data")
 async def get_data(db: Session = Depends(get_db)):
     """
-    Making a request to Punk API, storing data in DB
+    [MANDATORY] Making a request to Punk API, storing data in DB
     """
     for page in range(1, 6):
         beers = await punk_request(page=page)
