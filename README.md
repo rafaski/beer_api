@@ -78,7 +78,7 @@ at index page `/docs`
 GET `/data`
 ```json
 {
-  "message": "Data requested from Punk API and stored in database"
+  "message": "Data successfully requested from Punk API and stored in database. You can can query data now."
 }
 ```
 GET `/avg_fermentation_temp_by_hop`
