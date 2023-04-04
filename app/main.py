@@ -25,7 +25,7 @@ description = """
 
 app = FastAPI(
     title="Beer API",
-    description="## Beer API ##"
+    description=description
 )
 
 
