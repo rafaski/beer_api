@@ -15,7 +15,7 @@ COPY ./app /code/app
 # Define environment variable
 ENV POSTGRES_USER=postgres \
     POSTGRES_PASSWORD=password \
-    POSTGRES_SERVER=localhost \
+    POSTGRES_SERVER=host.docker.internal \
     POSTGRES_PORT=5432 \
     POSTGRES_DB=db
 
