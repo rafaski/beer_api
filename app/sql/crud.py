@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, distinct
 
 from app.sql import models
 from app.schemas import Hop, Beer
@@ -92,8 +92,8 @@ def get_hops_by_amount(db: Session, amount: int) -> list[models.Hop]:
     """
     Get all hops that have an amount greater than or equal to X
     """
-    results = db.query(models.Hop).filter(
-        models.Hop.amount >= amount).order_by(models.Hop.amount.desc()).all()
+    results = db.query(models.Hop).filter(models.Hop.amount >= amount).order_by(
+        models.Hop.amount.desc()).all()
     return results
 
 
@@ -105,4 +105,25 @@ def get_beers_by_hop(db: Session, hop_name: str) -> list[models.Beer]:
     results = db.query(models.Beer).join(models.Hop).filter(
         models.Hop.name == hop_name).order_by(
         models.Beer.fermentation_temp).all()
+    return results
+
+
+def get_beers_with_highest_hop_amount(
+    db: Session, hop_name: str
+    ) -> list[models.Beer]:
+    """
+    Get the beers with the highest amount of a specific hop
+    """
+    # Select the beer IDs and the maximum hop amount
+    subquery = db.query(models.Hop.beer_id, func.max(models.Hop.amount).label(
+        'max_amount')).filter(models.Hop.name == hop_name).group_by(
+        models.Hop.beer_id).subquery()
+
+    # Filter the results to only include the rows where the hop amount is equal
+    # to the maximum hop amount for that beer
+    results = db.query(models.Beer).join(
+        subquery,
+        models.Beer.id == subquery.c.beer_id
+        ).filter(models.Hop.amount == subquery.c.max_amount).all()
+
     return results

@@ -15,10 +15,14 @@ Beer recipes are provided by an external API `Punk API` at
 `https://punkapi.com/documentation/v2`
 
 ### Supported operations are:
-- get average fermentation temperature by hop
-- get average fermentation temperature for primary hops per beer
-- get 10 most used hops in the recipes
-- get the beers that use a particular hop
+- Making a request to Punk API, storing data in DB `MANDATORY`
+- Get average fermentation temperature for each type of hops
+- Get average fermentation temperature for the primary hops
+- Show the top 10 most used hops in the recipes
+- Get all beers that have a fermentation temperature greater than X
+- Get all hops that have an amount greater than or equal to X
+- Get all beers that have a hop with the name X
+- Get the beers with the highest amount of a specific hop
 
 ### Requests
 Async requests to the external API were made using `httpx` library 
@@ -67,6 +71,7 @@ at index page `/docs`
 | GET    | /beers_by_temp                      | Get all beers that have a fermentation temperature greater than X |
 | GET    | /hops_by_amount                     | Get all hops that have an amount greater than or equal to X       |
 | GET    | /beers_by_hop                       | Get all beers that have a hop with the name X                     |
+| GET    | /beers_with_highest_hop_amount      | Get the beers with the highest amount of a specific hop           |
 
 ## Examples
 GET `/data`
@@ -190,6 +195,26 @@ GET `/beers_by_hop?hop_name=Raspberry%20Juice`
     "name": "Raspberry Popsicle Parade",
     "id": 299,
     "fermentation_temp": 21
-  }
+  },
+]
+```
+GET `/beers_with_highest_hop_amount?hop_name=Simcoe`
+```json
+[
+  {
+    "id": 2,
+    "name": "Trashy Blonde",
+    "fermentation_temp": 18
+  },
+  {
+    "id": 12,
+    "name": "Arcade Nation",
+    "fermentation_temp": 19
+  },
+  {
+    "id": 15,
+    "name": "Mixtape 8",
+    "fermentation_temp": 21
+  },
 ]
 ```

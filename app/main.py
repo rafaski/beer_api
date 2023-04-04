@@ -31,7 +31,7 @@ def get_db():
 @app.get("/data")
 async def get_data(db: Session = Depends(get_db)):
     """
-    Making a request to beer API, storing data in DB
+    Making a request to Punk API, storing data in DB
     """
     for page in range(1, 6):
         beers = await punk_request(page=page)
@@ -71,7 +71,7 @@ async def get_avg_fermentation_temp_by_hop_all(
 
 @app.get("/avg_fermentation_temp_primary_hops")
 async def get_avg_fermentation_temp_primary_hops(
-        db: Session = Depends(get_db)):
+    db: Session = Depends(get_db)):
     """
     Get average fermentation temperature for the primary hops
     """
@@ -121,3 +121,16 @@ async def get_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
         raise NotFound(details="Results not found.")
     return results
 
+
+@app.get("/beers_with_highest_hop_amount")
+async def get_beers_with_highest_hop_amount(
+    hop_name: str,
+    db: Session = Depends(get_db)
+    ):
+    """
+    Get the beers with the highest amount of a specific hop
+    """
+    results = crud.get_beers_with_highest_hop_amount(db=db, hop_name=hop_name)
+    if not results:
+        raise NotFound(details="Results not found.")
+    return results
