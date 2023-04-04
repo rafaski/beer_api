@@ -15,8 +15,9 @@ COPY ./app /code/app
 # Define environment variable
 ENV POSTGRES_USER=postgres \
     POSTGRES_PASSWORD=password \
-    POSTGRES_DB=postgres \
-    POSTGRES_HOST=db
+    POSTGRES_SERVER=localhost \
+    POSTGRES_PORT=5432 \
+    POSTGRES_DB=db
 
 # Start the application
 CMD ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8080"]

@@ -14,8 +14,9 @@ def load_variable(name: str, default: Any = None) -> str:
 
 # Postgres
 POSTGRES_USER = load_variable(name="POSTGRES_USER", default="postgres")
-POSTGRES_PASSWORD = load_variable(name="POSTGRES_PASSWORD", default="postgres")
-POSTGRES_DB = load_variable(name="POSTGRES_DB", default="postgres")
-POSTGRES_HOST = load_variable(name="POSTGRES_HOST", default="db")
+POSTGRES_PASSWORD = load_variable(name="POSTGRES_PASSWORD", default="password")
+POSTGRES_SERVER = load_variable(name="POSTGRES_SERVER", default="localhost")
+POSTGRES_PORT = load_variable(name="POSTGRES_PORT", default=5432)
+POSTGRES_DB = load_variable(name="POSTGRES_DB", default="db")
 DATABASE_URL = (f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@"
-                f"{POSTGRES_HOST}/{POSTGRES_DB}")
+                f"{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}")
