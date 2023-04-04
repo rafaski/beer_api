@@ -13,3 +13,6 @@ class ErrorTypes(str, Enum):
     FORBIDDEN = "forbidden"
     BAD_REQUEST = "bad_request"
     NOT_FOUND = "not_found"
+
+    # Dependency errors
+    PUNK_API_ERROR = "punk_api_error"

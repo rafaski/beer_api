@@ -36,4 +36,14 @@ class BadRequest(ApiException):
 class NotFound(ApiException):
     http_status_code: status = status.HTTP_404_NOT_FOUND
     error_type: ErrorTypes = ErrorTypes.NOT_FOUND
-    details: str = "Bad request"
+    details: str = "Not found"
+
+
+class DependencyException(AppException):
+    pass
+
+
+class PunkApiException(AppException):
+    http_status_code: status = status.HTTP_424_FAILED_DEPENDENCY
+    error_type: ErrorTypes = ErrorTypes.PUNK_API_ERROR
+    details: str = "Failed to fetch data from external API"
