@@ -44,7 +44,6 @@ async def get_data(db: Session = Depends(get_db)):
     [MANDATORY FIRST REQUEST] Making a request to Punk API, storing data in DB.
     It may take 15-20 seconds for the above operations to be completed.
     """
-    # try:
     for page in range(1, 6):
         beers = await punk_request(page=page)
         for beer in beers:
@@ -72,8 +71,6 @@ async def get_data(db: Session = Depends(get_db)):
         "message": ("Data requested from Punk API and stored in database. "
                     "You can can request data now.")
     }
-    # except:
-    #     pass
 
 
 @app.get("/avg_fermentation_temp_by_hop")
