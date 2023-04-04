@@ -18,6 +18,3 @@ ENV POSTGRES_USER=postgres \
     POSTGRES_SERVER=host.docker.internal \
     POSTGRES_PORT=5432 \
     POSTGRES_DB=db
-
-# Start the application
-CMD ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8080"]
