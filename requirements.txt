@@ -3,4 +3,5 @@ uvicorn
 python-dotenv
 httpx
 psycopg2
+psycopg2-binary
 sqlalchemy

@@ -1,19 +1,22 @@
 FROM python:3.10
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Set the working directory to /app/app
+WORKDIR /code
 
-WORKDIR /app
+# Copy requirements.txt
+COPY requirements.txt /code/requirements.txt
 
-COPY requirements.txt /app
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r /code/requirements.txt
 
-RUN apt-get install libpq-dev
+# Copy the entire app directory into the container
+COPY ./app /code/app
 
-RUN pip3 install --upgrade setuptools \
-    && pip3 install --upgrade pip \
-    && pip install -r requirements.txt
+# Define environment variable
+ENV POSTGRES_USER=postgres \
+    POSTGRES_PASSWORD=password \
+    POSTGRES_DB=postgres \
+    POSTGRES_HOST=db
 
-COPY . /app
-
-#
-#CMD ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8080"]
+# Start the application
+CMD ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8080"]
