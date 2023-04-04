@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func, distinct
+from sqlalchemy import func
 
 from app.sql import models
 from app.schemas import Hop, Beer
