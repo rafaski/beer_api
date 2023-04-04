@@ -134,15 +134,15 @@ GET `/avg_fermentation_temp_primary_hops`
 GET `/most_used_hops`
 ```json
 {
-  "Simcoe": 6861.01,
-  "Centennial": 5605.6900000000005,
-  "Amarillo": 5591.6900000000005,
-  "Citra": 5172.25,
-  "Chinook": 4625.66,
+  "Simcoe": 6531,
+  "Centennial": 5605.7,
+  "Amarillo": 5576.7,
+  "Citra": 5157.3,
+  "Chinook": 4625.7,
   "Honey": 4410,
   "Raspberry Juice": 3800,
-  "Columbus": 3142.0800000000004,
-  "Cascade": 2710.45,
+  "Columbus": 3142.1,
+  "Cascade": 2710.5,
   "Mosaic": 2168
 }
 ```

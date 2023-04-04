@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func, select
+from sqlalchemy import func
 
 from app.sql import models
 from app.schemas import Hop, Beer
@@ -67,7 +67,7 @@ def get_avg_temp_primary_hops(db: Session) -> list[dict]:
     return [r._asdict() for r in results]
 
 
-def get_ten_most_used_hops(db: Session) -> list[dict]:
+def get_ten_most_used_hops(db: Session) -> dict:
     """
     Show the top 10 most used hops in the recipes
     """
