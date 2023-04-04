@@ -4,11 +4,11 @@ from sqlalchemy.orm import sessionmaker
 
 from app.settings import DATABASE_URL
 
-# SQLite version
+# SQLite
 # DATABASE_URL = "sqlite:///./sql_app.db"
 # engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-# Postgres version
+# Postgres
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
