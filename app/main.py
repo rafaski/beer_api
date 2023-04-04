@@ -16,7 +16,6 @@ description = """
 - Get all beers that have a fermentation temperature greater than X
 - Get all hops that have an amount greater than or equal to X
 - Get all beers that have a hop with the name X
-- Get the beers with the highest amount of a specific hop
 """
 
 app = FastAPI(
