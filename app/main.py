@@ -11,6 +11,16 @@ models.Base.metadata.create_all(bind=engine)
 
 description = """
 ## Beer API ##
+
+### Supported operations are:
+- Making a request to Punk API, storing data in DB `MANDATORY`
+- Get average fermentation temperature for each type of hops
+- Get average fermentation temperature for the primary hops
+- Show the top 10 most used hops in the recipes
+- Get all beers that have a fermentation temperature greater than X
+- Get all hops that have an amount greater than or equal to X
+- Get all beers that have a hop with the name X
+- Get the beers with the highest amount of a specific hop
 """
 
 app = FastAPI(
