@@ -13,7 +13,7 @@ description = """
 ## Beer API ##
 
 ### Supported operations are:
-- `MANDATORY` Making a request to Punk API, storing data in DB
+- `MANDATORY FIRST REQUEST` Making a request to Punk API, storing data in DB
 - Get average fermentation temperature for each type of hops
 - Get average fermentation temperature for the primary hops
 - Show the top 10 most used hops in the recipes
@@ -41,7 +41,7 @@ def get_db():
 @app.get("/data")
 async def get_data(db: Session = Depends(get_db)):
     """
-    [MANDATORY] Making a request to Punk API, storing data in DB
+    [MANDATORY FIRST REQUEST] Making a request to Punk API, storing data in DB
     """
     for page in range(1, 6):
         beers = await punk_request(page=page)
