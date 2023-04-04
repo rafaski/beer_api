@@ -21,6 +21,7 @@ async def get_data(db: Session = Depends(get_db)):
         beers = await punk_request(page=page)
         for beer in beers:
             # Extracting beer data from response
+            # Dropping beers with None fermentation temperature
             temp = beer["method"]["fermentation"]["temp"]["value"]
             if temp:
                 new_beer: Beer = Beer(
