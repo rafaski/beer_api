@@ -39,8 +39,7 @@ Dependency management is handled using `requirements.txt` file
 
 ### Docker setup
 1. Create docker container `docker compose up -d`
-2. See the status `docker compose status`
-3. Delete docker container `docker compose down -v`
+
 
 ### Local setup
 1. Install dependencies from `requirements.txt`
