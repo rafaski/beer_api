@@ -33,6 +33,7 @@ async def startup():
 
 @app.on_event("shutdown")
 async def shutdown():
+    """Close all open database connections"""
     SessionLocal.close_all()
 
 app.include_router(data_router)
