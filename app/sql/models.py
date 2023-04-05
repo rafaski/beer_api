@@ -5,6 +5,9 @@ from app.sql.database import Base
 
 
 class Beer(Base):
+    """
+    Beer database table
+    """
     __tablename__ = "beers"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -15,6 +18,9 @@ class Beer(Base):
 
 
 class Hop(Base):
+    """
+    Hop database table with required relationship to beers table
+    """
     __tablename__ = "hops"
 
     id = Column(Integer, primary_key=True, autoincrement=True)

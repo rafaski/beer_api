@@ -24,16 +24,25 @@ class AppException(Exception):
 
 
 class ApiException(AppException):
+    """
+    Base API exception class
+    """
     pass
 
 
 class BadRequest(ApiException):
+    """
+    Bad Request custom exception class
+    """
     http_status_code: status = status.HTTP_400_BAD_REQUEST
     error_type: ErrorTypes = ErrorTypes.BAD_REQUEST
     details: str = "Bad request"
 
 
 class NotFound(ApiException):
+    """
+    Not Found custom exception class
+    """
     http_status_code: status = status.HTTP_404_NOT_FOUND
     error_type: ErrorTypes = ErrorTypes.NOT_FOUND
     details: str = "Not found"

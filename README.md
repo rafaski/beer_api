@@ -6,7 +6,7 @@ This a Beer Recipe API
 ### Main features:
 - FastAPI framework
 - async HTTP requests using `httpx` library
-- data stored in database with `postgresql`
+- data stored in database with `sqlite`
 - SQL queries and table models with ORM provided by `SQLalchemy`
 - data validation and data modelling with `pydantic`
 
@@ -29,9 +29,9 @@ to get all 325 beer recipes in JSON format.
 
 ### Database
 JSON response has a nested structure and many missing data therefore only 
-required data was extracted and saved to a database. 2 tables were created 
-"beers" and "hops" with required relationships. Database created with `postgres` 
-and `SQLAlchemy`
+required data was extracted and saved to a database. See more details in `Answers.pdf`. 
+2 tables were created "beers" and "hops" with required relationships. 
+Database created with `sqlite`and `SQLAlchemy`
 
 ### Dependencies
 Dependency management is handled using `requirements.txt` file
@@ -45,8 +45,8 @@ Start the application by running the following command `docker-compose up --buil
 3. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
 
 ### How to run application
-Make sure to hit `/data` endpoint first. It will fetch data from Punk API and save it to database.
-Only then you can hit other endpoints.
+Make sure to hit mandatory `/data` endpoint first. It will fetch data 
+from Punk API and save it to database. Only then you can hit other endpoints.
 
 ### Documentation
 Once the application is up and running, you can access FastAPI automatic docs 

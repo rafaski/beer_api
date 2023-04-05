@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 
 from app.sql import crud
 from app.sql.database import SessionLocal
-from app.errors import NotFound
 
 
 router = APIRouter()
@@ -20,7 +19,8 @@ def get_db():
 
 @router.get("/avg_fermentation_temp_by_hop", tags=["hops"])
 async def get_avg_fermentation_temp_by_hop_all(
-        db: Session = Depends(get_db)):
+    db: Session = Depends(get_db)
+):
     """
     Get average fermentation temperature for each type of hops
     """
@@ -30,7 +30,8 @@ async def get_avg_fermentation_temp_by_hop_all(
 
 @router.get("/avg_fermentation_temp_primary_hops", tags=["hops"])
 async def get_avg_fermentation_temp_primary_hops(
-    db: Session = Depends(get_db)):
+    db: Session = Depends(get_db)
+):
     """
     Get average fermentation temperature for the primary hops
     """

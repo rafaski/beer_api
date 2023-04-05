@@ -6,6 +6,9 @@ load_dotenv()
 
 
 def load_variable(name: str, default: Any = None) -> str:
+    """
+    Get environment variable from ENV file
+    """
     variable = os.getenv(name, default)
     if variable is None:
         print(f"Unable to load variable {name}")

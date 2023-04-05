@@ -92,7 +92,8 @@ def get_hops_by_amount(db: Session, amount: int) -> list[dict]:
     """
     Get all hops that have an amount greater than or equal to X
     """
-    results = db.query(models.Hop).filter(models.Hop.amount >= amount).order_by(
+    results = db.query(models.Hop).filter(
+        models.Hop.amount >= amount).order_by(
         models.Hop.amount.desc()).all()
     return results
 
