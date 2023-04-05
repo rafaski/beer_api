@@ -37,8 +37,8 @@ Database created with `sqlite`and `SQLAlchemy`
 Dependency management is handled using `requirements.txt` file
 
 ### Docker setup
-Start the application by running the following command `docker-compose up --build`
-You can access the application at `http://localhost:8080` or go directly to `/docs` to test it.
+1. Start the application by running the following command `docker-compose up --build`
+2. You can access the application at `http://localhost:8080` or go directly to `/docs` to test it.
 
 ### Without Docker setup
 1. Install dependencies from `requirements.txt`
