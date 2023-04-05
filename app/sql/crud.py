@@ -28,6 +28,7 @@ def get_avg_temp_by_hops(db: Session) -> list[dict]:
         'avg_beer_fermentation_temp')).join(
         models.Beer, models.Hop.beer_id == models.Beer.id).group_by(
         models.Hop.name).all()
+    # Returning results directly failed with docker, this workaround works
     return [r._asdict() for r in results]
 
 
@@ -64,6 +65,7 @@ def get_avg_temp_primary_hops(db: Session) -> list[dict]:
         secondary_query.c.avg_beer_fermentation_temp).join(
         secondary_query,
         primary_query.c.primary_hop_name == secondary_query.c.hop_name).all()
+    # Returning results directly failed with docker, this workaround works
     return [r._asdict() for r in results]
 
 
