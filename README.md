@@ -38,15 +38,16 @@ Dependency management is handled using `requirements.txt` file
 
 ### Docker setup
 Start the application by running the following command `docker-compose up --build`
+You can access the application at `http://localhost:8080` or go directly to `/docs` to test it.
 
 ### Without Docker setup
 1. Install dependencies from `requirements.txt`
-2. Make sure you have postgres server running
-3. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
+2. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
 
 ### How to run application
 Make sure to hit mandatory `/data` endpoint first. It will fetch data 
-from Punk API and save it to database. Only then you can hit other endpoints.
+from Punk API and save it to database. It will take 20-30 seconds to fetch all data. 
+You can hit other endpoints after successfully executing `/data` endpoint.
 
 ### Documentation
 Once the application is up and running, you can access FastAPI automatic docs 

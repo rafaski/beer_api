@@ -48,7 +48,7 @@ def get_avg_temp_primary_hops(db: Session) -> list[dict]:
     Some beers have several hops with the same amount as showcased
     in the example data in README.md.
     secondary_query: calculates average fermentation temperature for each hop.
-    results: joined the above subqueries to showcase results.
+    results: joined the above sub queries to showcase results.
     """
     # Calculate the primary hop for each beer along with its maximum amount
     primary_query = db.query(
@@ -104,7 +104,7 @@ def get_beers_by_temp(db: Session, temp: int) -> list[dict]:
     Get all beers that have a fermentation temperature greater than X
 
     Logic:
-    Query beers table. Filter results by privided temp: beer.temp > temp.
+    Query beers table. Filter results by provided temp: beer.temp > temp.
     Sort results by name.
     """
     results = db.query(models.Beer).filter(

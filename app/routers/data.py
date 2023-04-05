@@ -14,7 +14,7 @@ router = APIRouter(tags=["data"])
 async def get_data(db: Session = Depends(get_db)):
     """
     [MANDATORY FIRST REQUEST] Making a request to Punk API, storing data in DB.
-    It may take 15-20 seconds for the above operations to be completed.
+    It may take 20-30 seconds for these operations to be completed.
     """
     # Looping through all Punk API pages to fetch data
     for page in range(1, 6):
