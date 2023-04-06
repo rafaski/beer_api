@@ -54,16 +54,6 @@ class NotFound(ApiException):
     details: str = "Not found"
 
 
-class MissingData(ApiException):
-    """
-    Failed to fetch data custom exception class
-    """
-    http_status_code: status = status.HTTP_500_INTERNAL_SERVER_ERROR
-    error_type: ErrorTypes = ErrorTypes.MISSING_DATA
-    details: str = ("Failed to fetch data. Make sure you successfully "
-                    "requested data from /data endpoint.")
-
-
 class DependencyException(AppException):
     pass
 
