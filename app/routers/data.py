@@ -5,9 +5,10 @@ from app.sql import crud
 from app.schemas import Beer, Hop
 from app.dependencies.punk_client import punk_request
 from app.routers.beers import get_db
+from app.auth.verify import verify_api_key
 
 
-router = APIRouter(tags=["data"])
+router = APIRouter(tags=["data"], dependencies=[Depends(verify_api_key)])
 
 
 @router.get("/data")
@@ -16,36 +17,60 @@ async def get_data(db: Session = Depends(get_db)):
     [MANDATORY FIRST REQUEST] Making a request to Punk API, storing data in DB.
     It may take 20-30 seconds for these operations to be completed.
     """
-    # Looping through all Punk API pages to fetch data
+    # Loop through each page of Punk API data to fetch beer information
     for page in range(1, 6):
+        # Make HTTP request to the Punk API to fetch beer data
         beers = await punk_request(page=page)
-        for beer in beers:
-            # Extracting beer data from JSON response
-            # Dropping beers with None temp or temp > 32
-            temp = beer["method"]["fermentation"]["temp"]["value"]
-            if temp and temp < 32:
-                new_beer: Beer = Beer(
-                    id=beer["id"],
-                    name=beer["name"],
-                    fermentation_temp=temp
-                )
-                # Saving beer to database
-                crud.create_beer(db=db, beer=new_beer)
 
-                # Extracting hop data from response
-                hops = beer["ingredients"]["hops"]
-                for hop in hops:
-                    if hops:
-                        new_hop: Hop = Hop(
-                            name=hop["name"],
-                            amount=hop["amount"]["value"],
-                            add=hop["add"],
-                            attribute=hop["attribute"],
-                            beer_id=beer["id"]
-                        )
-                        # Saving hop to database
-                        crud.create_hop(db=db, hop=new_hop)
+        # Loop through each beer in the API response and extract  data
+        for beer in beers:
+            try:
+                # Extract the fermentation temperature from the API response
+                temp = beer["method"]["fermentation"]["temp"]["value"]
+
+                # Drop beers with None temp or temp > 32
+                if temp and temp < 32:
+                    # Create new Beer object using the extracted data
+                    new_beer: Beer = Beer(
+                        id=beer["id"],
+                        name=beer["name"],
+                        fermentation_temp=temp
+                    )
+
+                    # Save the Beer object to the database
+                    crud.create_beer(db=db, beer=new_beer)
+
+                    # Extract hop data from the API response
+                    hops = beer["ingredients"]["hops"]
+                    for hop in hops:
+                        # Check if the hop data is not None
+                        if hop:
+                            # Create new Hop object using the extracted data
+                            new_hop: Hop = Hop(
+                                name=hop["name"],
+                                amount=hop["amount"]["value"],
+                                add=hop["add"],
+                                attribute=hop["attribute"],
+                                beer_id=beer["id"]
+                            )
+
+                            # Save the Hop object to the database
+                            crud.create_hop(db=db, hop=new_hop)
+
+            except KeyError:
+                # Handle the exception when the JSON response layout changes
+                return {
+                    "message": ("The JSON response structure has changed. "
+                                "Please update the code.")
+                }
+
+            except Exception:
+                # Handle the exception for data processing or db operations
+                return {
+                    "message": ("An error occurred while processing data "
+                                "or storing it in the database.")
+                }
     return {
         "message": ("Data successfully requested from Punk API and stored "
-                    "in database. You can can query data now.")
+                    "in database. You can query data now.")
     }

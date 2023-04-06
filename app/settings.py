@@ -15,6 +15,9 @@ def load_variable(name: str, default: Any = None) -> str:
     return variable
 
 
+# access api key
+API_KEY = load_variable(name="API_KEY")
+
 # Postgres
 POSTGRES_USER = load_variable(name="POSTGRES_USER")
 POSTGRES_PASSWORD = load_variable(name="POSTGRES_PASSWORD")

@@ -10,9 +10,9 @@ class ErrorTypes(str, Enum):
 
     # API errors
     UNAUTHORIZED = "unauthorized"
-    FORBIDDEN = "forbidden"
     BAD_REQUEST = "bad_request"
     NOT_FOUND = "not_found"
+    MISSING_DATA = "missing_data"
 
     # Dependency errors
     PUNK_API_ERROR = "punk_api_error"

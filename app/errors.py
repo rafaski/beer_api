@@ -30,6 +30,12 @@ class ApiException(AppException):
     pass
 
 
+class Unauthorized(ApiException):
+    http_status_code: status = status.HTTP_401_UNAUTHORIZED
+    error_type: ErrorTypes = ErrorTypes.UNAUTHORIZED
+    details: str = "Invalid API key"
+
+
 class BadRequest(ApiException):
     """
     Bad Request custom exception class
@@ -48,11 +54,21 @@ class NotFound(ApiException):
     details: str = "Not found"
 
 
+class MissingData(ApiException):
+    """
+    Failed to fetch data custom exception class
+    """
+    http_status_code: status = status.HTTP_500_INTERNAL_SERVER_ERROR
+    error_type: ErrorTypes = ErrorTypes.MISSING_DATA
+    details: str = ("Failed to fetch data. Make sure you successfully "
+                    "requested data from /data endpoint.")
+
+
 class DependencyException(AppException):
     pass
 
 
-class PunkApiException(AppException):
+class PunkApiException(DependencyException):
     http_status_code: status = status.HTTP_424_FAILED_DEPENDENCY
     error_type: ErrorTypes = ErrorTypes.PUNK_API_ERROR
     details: str = "Failed to fetch data from external API"

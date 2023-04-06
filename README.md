@@ -9,6 +9,7 @@ This a Beer Recipe API
 - data stored in database with `sqlite`
 - SQL queries and table models with ORM provided by `SQLalchemy`
 - data validation and data modelling with `pydantic`
+- authentication via API key
 
 ### Beer recipes
 Beer recipes are provided by an external API `Punk API` at 
@@ -29,9 +30,14 @@ to get all 325 beer recipes in JSON format.
 
 ### Database
 JSON response has a nested structure and many missing data therefore only 
-required data was extracted and saved to a database. See more details in `Answers.pdf`. 
+required data was extracted and saved to a database. 
 2 tables were created "beers" and "hops" with required relationships. 
 Database created with `sqlite`and `SQLAlchemy`
+
+### Authentication
+To authenticate incoming requests, we check the `api_key` header.
+Create the `.env` file (use the `.env.dist` for reference) 
+and add `API_KEY` to environment variables.
 
 ### Dependencies
 Dependency management is handled using `requirements.txt` file

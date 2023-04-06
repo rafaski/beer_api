@@ -9,11 +9,18 @@ async def punk_request(page: int) -> dict:
     :return: a list of all beers
     """
     url = f"https://api.punkapi.com/v2/beers?page={page}&per_page=80"
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url=url)
 
-    if not response.status_code == 200:
+    # Attempt to make an async HTTP GET request to the API
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url=url)
+
+            # Raise an HTTP error if the response status code is not 200 OK
+            response.raise_for_status()
+
+    except (httpx.HTTPError, httpx.RequestError):
         raise PunkApiException()
 
+    # Parse the response JSON and return the beer data as a dictionary
     beers = response.json()
     return beers
