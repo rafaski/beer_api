@@ -35,7 +35,7 @@ required data was extracted and saved to a database.
 Database created with `sqlite`and `SQLAlchemy`
 
 ### Authentication
-To authenticate incoming requests, we check the `api_key` header.
+To authenticate incoming requests, we check the `x-api-key` header.
 Create the `.env` file (use the `.env.dist` for reference) 
 and add `API_KEY` to environment variables.
 
