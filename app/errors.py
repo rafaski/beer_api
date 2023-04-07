@@ -31,6 +31,9 @@ class ApiException(AppException):
 
 
 class Unauthorized(ApiException):
+    """
+    Unauthorized custom exception class
+    """
     http_status_code: status = status.HTTP_401_UNAUTHORIZED
     error_type: ErrorTypes = ErrorTypes.UNAUTHORIZED
     details: str = "Invalid API key"
