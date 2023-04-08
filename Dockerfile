@@ -1,6 +1,6 @@
 FROM python:3.10
 
-# Set the working directory to /app/app
+# Set the working directory to /code
 WORKDIR /code
 
 # Copy requirements.txt

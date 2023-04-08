@@ -1,10 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.sql import crud
 from app.sql.database import SessionLocal
 from app.auth.verify import verify_api_key
-from app.errors import MissingData
 
 
 router = APIRouter(dependencies=[Depends(verify_api_key)])
