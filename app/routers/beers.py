@@ -73,5 +73,6 @@ async def get_beers_by_hop(hop_name: str, db: Session = Depends(get_db)):
     Get all beers that have a hop with the name X
     and order them by fermentation temperature
     """
+    hop_name = hop_name.capitalize()
     results = crud.get_beers_by_hop(db=db, hop_name=hop_name)
     return results
