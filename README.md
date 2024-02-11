@@ -9,7 +9,10 @@ This a Beer Recipe API
 - data stored in database with `sqlite`
 - SQL queries and table models with ORM provided by `SQLalchemy`
 - data validation and data modelling with `pydantic`
-- authentication via API key
+- environment variable management with `pydantic-settings`
+- authentication via API key in headers
+- dependency management with `poetry` and `pyproject.toml`
+- `pre-commit` tool with `black` and `ruff` as formatters and linters
 
 ### Beer recipes
 Beer recipes are provided by an external API `Punk API` at 
@@ -40,15 +43,12 @@ Create the `.env` file (use the `.env.dist` for reference)
 and add `API_KEY` to environment variables.
 
 ### Dependencies
-Dependency management is handled using `requirements.txt` file
+Dependency management is handled with `poetry` and `pyproject.toml`
 
 ### Docker setup
-1. Start the application by running the following command `docker-compose up --build`
-2. You can access the application at `http://localhost:8080` or go directly to `/docs` to test it.
-
-### Without Docker setup
-1. Install dependencies from `requirements.txt`
-2. Run the app: `uvicorn app.main:app --host 127.0.0.1 --port 8080 --reload`
+1. Start the application by running the following command `docker-compose up --build -d`
+2. You can access the application at `http://localhost:9080` on linux/windows or `http://0.0.0.0:9080` on mac.
+3. SwaggerUI is accessible at `/docs` endpoint.
 
 ### How to run application
 Make sure to hit mandatory `/data` endpoint first. It will fetch data 
@@ -66,6 +66,11 @@ at index page `/docs`
 | 400         | Bad request       |
 | 404         | Not found         |
 | 424         | Failed dependency |
+
+### Health Endpoint
+| Method | Endpoint | Description  |
+|--------|----------|--------------|
+| GET    | /ping    | Health check |
 
 ### Data Endpoints
 | Method | Endpoint | Description                                                                |
