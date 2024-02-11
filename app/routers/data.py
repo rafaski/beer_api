@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.sql import crud
-from app.schemas import Beer, Hop
+from app.auth.verify import verify_api_key
 from app.dependencies.punk_client import punk_request
 from app.routers.beers import get_db
-from app.auth.verify import verify_api_key
-
+from app.schemas import Beer, Hop
+from app.sql import crud
 
 router = APIRouter(tags=["data"], dependencies=[Depends(verify_api_key)])
 
@@ -32,9 +31,7 @@ async def get_data(db: Session = Depends(get_db)):
                 if temp and temp < 32:
                     # Create new Beer object using the extracted data
                     new_beer: Beer = Beer(
-                        id=beer["id"],
-                        name=beer["name"],
-                        fermentation_temp=temp
+                        id=beer["id"], name=beer["name"], fermentation_temp=temp
                     )
 
                     # Save the Beer object to the database
@@ -51,7 +48,7 @@ async def get_data(db: Session = Depends(get_db)):
                                 amount=hop["amount"]["value"],
                                 add=hop["add"],
                                 attribute=hop["attribute"],
-                                beer_id=beer["id"]
+                                beer_id=beer["id"],
                             )
 
                             # Save the Hop object to the database
@@ -60,17 +57,23 @@ async def get_data(db: Session = Depends(get_db)):
             except KeyError:
                 # Handle the exception when the JSON response layout changes
                 return {
-                    "message": ("The JSON response structure has changed. "
-                                "Please update the code.")
+                    "message": (
+                        "The JSON response structure has changed. "
+                        "Please update the code."
+                    )
                 }
 
             except Exception:
                 # Handle the exception for data processing or db operations
                 return {
-                    "message": ("An error occurred while processing data "
-                                "or storing it in the database.")
+                    "message": (
+                        "An error occurred while processing data "
+                        "or storing it in the database."
+                    )
                 }
     return {
-        "message": ("Data successfully requested from Punk API and stored "
-                    "in database. You can query data now.")
+        "message": (
+            "Data successfully requested from Punk API and stored "
+            "in database. You can query data now."
+        )
     }

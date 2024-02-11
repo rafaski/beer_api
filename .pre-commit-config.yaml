@@ -1,0 +1,22 @@
+repos:
+- repo: local
+  hooks:
+  - id: black
+    name: black
+    description: opinionated code auto formatter
+    entry: poetry run black
+    types: [python]
+    language: system
+    args: ["--preview"]
+  - id: ruff
+    name: ruff
+    description: code formatter with built-in isort
+    entry: poetry run ruff --fix
+    types: [python]
+    language: system
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+    - id: check-yaml
