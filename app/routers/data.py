@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from starlette.responses import JSONResponse
 
 from app.auth.verify import verify_api_key
 from app.dependencies.punk_client import punk_request
@@ -56,24 +57,27 @@ async def get_data(db: Session = Depends(get_db)):
 
             except KeyError:
                 # Handle the exception when the JSON response layout changes
-                return {
-                    "message": (
-                        "The JSON response structure has changed. "
-                        "Please update the code."
+                raise HTTPException(
+                    status_code=500,
+                    detail=(
+                        "JSON response structure has changed. Please update "
+                        "the code."
                     )
-                }
+                )
 
             except Exception:
                 # Handle the exception for data processing or db operations
-                return {
-                    "message": (
-                        "An error occurred while processing data "
-                        "or storing it in the database."
+                raise HTTPException(
+                    status_code=500,
+                    detail=(
+                        "An error occurred while processing data or storing it "
+                        "in the database."
                     )
-                }
-    return {
+                )
+
+    return JSONResponse(content={
         "message": (
-            "Data successfully requested from Punk API and stored "
-            "in database. You can query data now."
+            "Data successfully requested from Punk API and stored in database. "
+            "You can query data now."
         )
-    }
+    })

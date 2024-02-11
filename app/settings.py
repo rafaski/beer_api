@@ -10,11 +10,11 @@ class Settings(BaseSettings):
     is_production: bool = False
 
     # postgres
-    postgres_user: str
-    postgres_password: str
-    postgres_server: str
-    postgres_port: str
-    postgres_db: str
+    postgres_user: str = "postgres"
+    postgres_password: str = "postgres"
+    postgres_server: str = "localhost"
+    postgres_port: str = "5432"
+    postgres_db: str = "my_database"
 
     @property
     def postgres_db_url(self) -> str:
