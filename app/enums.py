@@ -5,6 +5,7 @@ class ErrorTypes(str, Enum):
     """
     Enums for custom error types
     """
+
     # App errors
     UNKNOWN = "unknown"
 

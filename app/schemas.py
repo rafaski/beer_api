@@ -5,6 +5,7 @@ class Hop(BaseModel):
     """
     Schema for hops SQL table
     """
+
     name: str
     amount: float
     add: str
@@ -12,16 +13,17 @@ class Hop(BaseModel):
     beer_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Beer(BaseModel):
     """
     Schema for beers SQL table
     """
+
     id: int
     name: str
     fermentation_temp: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True

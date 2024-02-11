@@ -1,13 +1,15 @@
-FROM python:3.10
+FROM python:3.11-slim-bullseye
 
-# Set the working directory to /code
-WORKDIR /code
+ENV POETRY_VERSION="1.4.2"
 
-# Copy requirements.txt
-COPY requirements.txt /code/requirements.txt
+WORKDIR /app
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r /code/requirements.txt
+RUN pip install --upgrade pip && pip install "poetry==$POETRY_VERSION"
 
-# Copy the entire app directory into the container
-COPY ./app /code/app
+COPY pyproject.toml* /app/
+
+RUN poetry config virtualenvs.create false && poetry install
+
+COPY . /app
+
+CMD ["poetry", "run", "uvicorn",  "app.main:app", "--host","0.0.0.0", "--port", "8080", "--no-access-log"]

@@ -1,6 +1,7 @@
 import httpx
 
 from app.errors import PunkApiException
+from app.settings import settings
 
 
 async def punk_request(page: int) -> dict:
@@ -8,7 +9,7 @@ async def punk_request(page: int) -> dict:
     HTTP requests to fetch all beer data from Punk API
     :return: a list of all beers
     """
-    url = f"https://api.punkapi.com/v2/beers?page={page}&per_page=80"
+    url = f"{settings.beer_api_base_url}?page={page}&per_page=80"
 
     # Attempt to make an async HTTP GET request to the API
     try:
@@ -22,5 +23,4 @@ async def punk_request(page: int) -> dict:
         raise PunkApiException()
 
     # Parse the response JSON and return the beer data as a dictionary
-    beers = response.json()
-    return beers
+    return response.json()

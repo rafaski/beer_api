@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 
-from app.sql import models
-from app.sql.database import SessionLocal, engine
 from app.routers.beers import router as beer_router
 from app.routers.data import router as data_router
+from app.routers.health import router as health_router
+from app.settings import settings
+from app.sql import models
+from app.sql.database import SessionLocal, engine
 
 description = """
 ## Beer API ##
@@ -20,7 +22,8 @@ description = """
 
 app = FastAPI(
     title="Beer API",
-    description=description
+    description=description,
+    docs_url=None if settings.is_production else "/docs",
 )
 
 
@@ -35,5 +38,7 @@ async def shutdown():
     """Close all open database connections"""
     SessionLocal.close_all()
 
+
 app.include_router(data_router)
 app.include_router(beer_router)
+app.include_router(health_router)
