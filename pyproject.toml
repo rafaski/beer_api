@@ -1,0 +1,37 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "Beer API"
+description = "Beer API"
+version = "0.0.1"
+authors = ["rafal rav.skibinski@gmail.com"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all]"], version = "^0.108.0"}
+pydantic = "^2.5.3"
+pydantic-settings = "^2.0.2"
+uvicorn = {extras = ["standard"], version = "^0.25.0"}
+httpx = "^0.26.0"
+sqlalchemy = "2.0.25"
+#psycopg2 = "2.9.9"
+pytest = "^7.4.0"
+pytest-httpx = "^0.29.0"
+pytest-cov = "^4.1.0"
+black = "^23.3.0"
+ruff = "^0.0.276"
+pre-commit = "^3.3.3"
+
+[tool.black]
+line-length = 80
+
+[tool.ruff]
+line-length = 80
+extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
+target-version = "py311"
+
+[tool.ruff.pydocstyle]
+convention = "google"
